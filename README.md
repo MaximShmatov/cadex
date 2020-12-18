@@ -1,4 +1,4 @@
-Box3D (Backend deployed on Heroku) - [Посмотреть](https://github.com/mapbox/earcut.hpp.git)
+Box3D (Backend deployed on Heroku) - [Посмотреть](https://maximshmatov.github.io/cadex/)
 =====
 
 ### API Triangulation example:
