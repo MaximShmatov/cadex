@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useRef} from 'react';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import {
   Geometry,
@@ -40,25 +40,19 @@ function TriangulationBox(props: TBoxGeometry) {
   const camera = new PerspectiveCamera(60, 1, 0.1, 1000);
   camera.position.z = 420;
 
-  useEffect(() => {
-    if (canvasBox.current !== null) {
-      const control = new OrbitControls(camera, canvasBox.current);
+  if (canvasBox.current !== null) {
+    new OrbitControls(camera, canvasBox.current);
 
-      const animate = () => {
-        box.rotation.x += 0.01;
-        box.rotation.y += 0.01;
-        renderer.render(scene, camera);
-      };
+    const animate = () => {
+      box.rotation.x += 0.01;
+      box.rotation.y += 0.01;
+      renderer.render(scene, camera);
+    };
 
-      const renderer = new WebGLRenderer({alpha: true, canvas: canvasBox.current, antialias: true});
-      renderer.setSize(canvasBox.current.clientWidth, canvasBox.current.clientHeight);
-      renderer.setAnimationLoop(animate);
-
-      return () => {
-        control.dispose();
-      }
-    }
-  });
+    const renderer = new WebGLRenderer({alpha: true, canvas: canvasBox.current, antialias: true});
+    renderer.setSize(canvasBox.current.clientWidth, canvasBox.current.clientHeight);
+    renderer.setAnimationLoop(animate);
+  }
 
   return (
     <canvas className="triangulation-box" ref={canvasBox}>
