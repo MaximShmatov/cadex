@@ -19,16 +19,16 @@ const ControlPanel = () => {
   const [boxGeometryState, setBoxGeometryState] = useState(initBox);
 
   const getBoxValues = useCallback(() => {
-    const url = 'https://apishare.herokuapp.com/triangulation_box';
+    const url = 'https://apishare.herokuapp.com/';
     const width = Number(widthRef.current?.value);
     const height = Number(heightRef.current?.value);
     const dept = Number(deptRef.current?.value);
 
     if (width > 0 && height > 0 && dept > 0) {
-      const get = `?width=${width}&height=${height}&dept=${dept}`;
+      const get = `triangulation_box?width=${width}&height=${height}&dept=${dept}`;
       fetch(url + get)
         .then(res => res.json())
-        .then(data => setBoxGeometryState(data));
+        .then(data => setBoxGeometryState(data), error => console.error(error));
     }
   }, []);
 
