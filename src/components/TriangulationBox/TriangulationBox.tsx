@@ -64,7 +64,7 @@ function TriangulationBox(props: TBoxGeometry) {
         geometry.dispose();
       }
     }
-  }, [geometry])
+  }, [geometry]);
 
   return (
     <canvas className="triangulation-box" ref={canvasBox}>

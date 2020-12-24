@@ -1,31 +1,38 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useCallback, useEffect, useMemo} from 'react';
 import TriangulationBox from '../TriangulationBox/TriangulationBox';
 import './styles.sass';
 
 const ControlPanel = () => {
-  const initBox: TBoxGeometry = {
-    x: 0,
-    y: 0,
-    z: 0,
-    vertices: [],
-    triangles: [],
-  }
-  const width = useRef<HTMLInputElement>(null);
-  const height = useRef<HTMLInputElement>(null);
-  const dept = useRef<HTMLInputElement>(null);
+  const initBox: TBoxGeometry = useMemo(() => {
+    return {
+      x: 0,
+      y: 0,
+      z: 0,
+      vertices: [],
+      triangles: [],
+    }
+  }, [])
 
+  const widthRef = useRef<HTMLInputElement>(null);
+  const heightRef = useRef<HTMLInputElement>(null);
+  const deptRef = useRef<HTMLInputElement>(null);
   const [boxGeometryState, setBoxGeometryState] = useState(initBox);
 
-  const url = 'https://apishare.herokuapp.com/triangulation_box';
+  const getBoxValues = useCallback(() => {
+    const url = 'https://apishare.herokuapp.com/triangulation_box';
+    const width = Number(widthRef.current?.value);
+    const height = Number(heightRef.current?.value);
+    const dept = Number(deptRef.current?.value);
 
-  const getBoxValues = () => {
-    if (width.current !== null && height.current !== null && dept.current !== null) {
-      const get = `?width=${width.current.value}&height=${height.current.value}&dept=${dept.current.value}`;
+    if (width > 0 && height > 0 && dept > 0) {
+      const get = `?width=${width}&height=${height}&dept=${dept}`;
       fetch(url + get)
         .then(res => res.json())
         .then(data => setBoxGeometryState(data));
     }
-  };
+  }, []);
+
+  useEffect(() => getBoxValues(), [getBoxValues])
 
   return (
     <form className="control">
@@ -40,7 +47,7 @@ const ControlPanel = () => {
           <input
             className="control__min-value"
             type="number"
-            ref={width}
+            ref={widthRef}
             defaultValue={200}
           />
           Width
@@ -49,7 +56,7 @@ const ControlPanel = () => {
           <input
             className="control__max-value"
             type="number"
-            ref={height}
+            ref={heightRef}
             defaultValue={200}
           />
           Height
@@ -58,7 +65,7 @@ const ControlPanel = () => {
           <input
             className="control__value-from"
             type="number"
-            ref={dept}
+            ref={deptRef}
             defaultValue={200}
           />
           Dept
