@@ -32,20 +32,20 @@ function TriangulationBox(props: TBoxGeometry) {
   geometry.computeFaceNormals();
 
   useEffect(() => {
-    const material = new MeshPhongMaterial({color: 0x00ff00});
-    const box = new Mesh(geometry, material);
-
-    const light = new DirectionalLight(0xffffff, 1);
-    light.position.set(-1, -1, 20);
-
-    const scene = new Scene();
-    scene.add(box);
-    scene.add(light);
-
-    const camera = new PerspectiveCamera(60, 1, 0.1, 1000);
-    camera.position.z = 420;
-
     if (canvasBox.current !== null) {
+      const material = new MeshPhongMaterial({color: 0x00ff00});
+      const box = new Mesh(geometry, material);
+
+      const light = new DirectionalLight(0xffffff, 1);
+      light.position.set(-1, -1, 20);
+
+      const scene = new Scene();
+      scene.add(box);
+      scene.add(light);
+
+      const camera = new PerspectiveCamera(60, 1, 0.1, 1000);
+      camera.position.z = 420;
+
       const control = new OrbitControls(camera, canvasBox.current);
 
       const animate = () => {
@@ -63,6 +63,9 @@ function TriangulationBox(props: TBoxGeometry) {
         renderer.dispose();
         geometry.dispose();
       }
+    }
+    return () => {
+      geometry.dispose();
     }
   }, [geometry]);
 
