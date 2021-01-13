@@ -1,5 +1,8 @@
 Box3D (Backend deployed on Heroku) - [Посмотреть](https://maximshmatov.github.io/cadex/)
 =====
+Данный пример реализован посредством React технологии как одностраничное приложение.
+Серверная часть проекта реализована на Node посредством express фрэймворка.
+При запуске демонстрации нужно подождать 10с пока поднимится сервер Heroky, после чего бокс отобразится.
 
 ### API Triangulation example:
 https://apishare.herokuapp.com/triangulation_box?width=100&height=100&dept=100
